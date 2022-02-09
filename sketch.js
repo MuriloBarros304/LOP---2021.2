@@ -133,6 +133,11 @@ function fase1(){
     if(vidas==0){
       tela=4;
     }
+    if(tela==4){
+      pontos=0;
+      vidas=5;
+      vo=1;
+    }
     yr = yr + vo;
     text("Pontos: "+pontos,450,50);
     text("Vidas: "+vidas,450,25);
