@@ -112,6 +112,17 @@ function fase1(){
     
   
         // movimenta a nave 
+  
+  if(tela==1){
+    if(direcionais(xbde)){
+      xJogador=xJogador-5;
+    }
+  if(direcionais(xbdd)){
+      xJogador=xJogador+5;
+    
+  }
+}
+
     if (keyIsDown(LEFT_ARROW)) {
       xJogador = xJogador - 5;
     }
@@ -365,14 +376,7 @@ function mouseClicked() {
       tela = 0; 
     }}
   
-  if(tela==1){
-    if(direcionais(xbde)){
-      xJogador=xJogador-5;
-    }
-  if(direcionais(xbdd)){
-      xJogador=xJogador+5;
-    }
-  }
+  
 }
 
 
