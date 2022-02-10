@@ -1,7 +1,12 @@
 var x=0;
 var n=0;
 var r=0;
+var alturaBtnDirecional=50;
+var larguraBtnDirecional=50;
+var xbde=20;
+var xbdd=530;
 var xMenu=200;
+var ybd=350;
 var yb1=170;
 var yb2=235;
 var yb3=300;
@@ -22,7 +27,6 @@ var corBtnMenu = 'rgb(50,50,120)';
 var cor2Menu= 'rgb(255)';
 var xr,yr,xo,yo;
 var vo=1;
-var distMinimaEntreNaveObst = 0; 
 var pontos = 0;
 var corObstaculo = 'rgb(175,175,175)';
 var valor=[];
@@ -30,19 +34,14 @@ var xo = [];
 var yo = [];
 var quantidadeObst = 5;
 var v1,v2;
-var distMinimaEntreNaveObst=30;
+var distMinimaEntreNaveObst=20;
 var vidas=5;
+var xJogador, yJogador;
 
 //carregando as imagens presentes no menu
 function preload() {
   imgMenu=loadImage('Background-4.png');
   imgNave=loadImage('ship3.png');
-  a1=loadImage('a1.png');
-  a2=loadImage('a2.png');
-  a3=loadImage('a3.png');
-  a4=loadImage('a2.png');
-  a5=loadImage('a3.png');
-  
 }
 
 
@@ -52,6 +51,10 @@ function preload() {
 //função que detecta se o cursor está sobre um botão do menu 
 function estaSobreBtn(yBtnMenu){
   return  mouseX > xMenu && mouseX < xMenu + larguraBtnMenu && mouseY > yBtnMenu && mouseY < yBtnMenu + alturaBtnMenu;
+}
+
+function direcionais(xbd){
+  return  mouseY > ybd && mouseY < ybd + larguraBtnDirecional && mouseX > xbd && mouseX < xbd + alturaBtnDirecional;
 }
 
 //função que detecta se o cursor está sobre o botão voltar
@@ -106,8 +109,21 @@ function próximaPergunta(){
  
 function fase1(){
     image(imgMenu,0,0,600,400);
-    image(imgNave,mouseX - 17.5,mouseY - 30,35,35);
     
+  
+        // movimenta a nave 
+    if (keyIsDown(LEFT_ARROW)) {
+      xJogador = xJogador - 5;
+    }
+    if (keyIsDown(RIGHT_ARROW)) {
+      xJogador += 5;
+    }
+    if (keyIsDown(UP_ARROW)) {
+      yJogador -= 5;
+    }
+    if (keyIsDown(DOWN_ARROW)) {
+      yJogador += 5;
+    }
     if(pontos>500){
       vo=1.5;
       quantidadeObst=7;
@@ -137,6 +153,8 @@ function fase1(){
       pontos=0;
       vidas=5;
       vo=1;
+      xJogador=300;
+      yJogador=360;
     }
     yr = yr + vo;
     text("Pontos: "+pontos,450,50);
@@ -145,7 +163,7 @@ function fase1(){
     xr = random(600)
     yr = - random(10,400);  
       
-      
+    
     }
     desenhaBtnVoltar();
  
@@ -159,13 +177,12 @@ function fase1(){
       reiniciaObstaculo(i);
     }
 //colisão da resposta com a nave 
-  if (dist(xr,yr,mouseX,mouseY) < distMinimaEntreNaveObst){
-    console.log("Colidiu!");
+  if (dist(xr,yr,xJogador,yJogador) < distMinimaEntreNaveObst){
     pontos = pontos + 100; 
     próximaPergunta();
   }
 //colisão dos obstáculos com a nave
-  if (dist(xo[i],yo[i],mouseX,mouseY) < distMinimaEntreNaveObst){
+  if (dist(xo[i],yo[i],xJogador,yJogador) < distMinimaEntreNaveObst){
     vidas=vidas-1; 
   
      for ( cont=0; cont<=quantidadeObst; cont++){
@@ -173,6 +190,14 @@ function fase1(){
       }
      }
 }
+  fill(corBtnMenu);
+    stroke(0);
+    strokeWeight(2);    rect(xbde,ybd,larguraBtnDirecional,alturaBtnDirecional);  rect(xbdd,ybd,larguraBtnDirecional,alturaBtnDirecional);
+  
+  //desenha a nave
+  imageMode(CENTER);
+  image(imgNave,xJogador,yJogador,35,35);
+  imageMode(CORNERS);
 }
 
 function creditos(){
@@ -204,7 +229,6 @@ function creditos(){
 
 function instrucoes(){
     image(imgMenu,0,0,600,400);
-    image(imgNave,470,130,35,35);
     textSize(25);
     stroke(5);
     fill(255);
@@ -213,10 +237,11 @@ function instrucoes(){
     text('Instruções',300,50);
     textFont('Roboto');
     textSize(20);
-    text("Movimente o mouse para mover a nave", 300,150)
+    text("No celular/tablet, pressione os botões na lateral para mover a nave", 300,150);
+  text("No computador, pressione os botões direcionais para mover a nave", 300,170);
     text("Desvie dos obstáculos e colete o lixo espacial", 300, 200);
-    text("Lixo espacial: resultados corretos das operações matemáticas", 300, 250);
-    text("Obstáculos: resultados errados", 300, 300);
+    text("Lixo espacial: resultados corretos das operações matemáticas", 300, 270);
+    text("Obstáculos: resultados errados", 300, 320);
     desenhaBtnVoltar();
 }
 
@@ -252,8 +277,10 @@ function setup() {
     yo[i]=-random(100,400);
     valor[i]=parseInt(random(0,50));
   
-   
   }
+   
+  xJogador=300;
+  yJogador=360;
   
   
 }
@@ -262,12 +289,6 @@ function setup() {
 function draw() {
   if(tela==0){ 
   image(imgMenu,0,0,600,400);
-  image(imgNave,120,500-i,35,35);
-  image(a1,500,240,10,10);
-  image(a2,80,180,30,30);
-  image(a3,100,30,30,30);
-  image(a4,400,190,30,30);
-  image(a5,520,200,30,30);
   stroke(5);
   strokeWeight(10);
   textAlign(CENTER);
@@ -308,10 +329,7 @@ function draw() {
 
   
 }
-  n=n+2;// a incrementação da variável "i" faz com que o Y da nave diminua,
-if(n>10000){// o que faz com que a nave suba. isso se repete quando i for
-  n=0;  //maior que 10000
-}
+ 
 if(tela == 1){
   fase1();
 }
@@ -346,7 +364,17 @@ function mouseClicked() {
     if ( estaSobreBtnVoltar() ){
       tela = 0; 
     }}
+  
+  if(tela==1){
+    if(direcionais(xbde)){
+      xJogador=xJogador-5;
+    }
+  if(direcionais(xbdd)){
+      xJogador=xJogador+5;
+    }
+  }
 }
+
 
 
 
