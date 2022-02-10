@@ -111,15 +111,18 @@ function fase1(){
     image(imgMenu,0,0,600,400);
     
   
+    
+  
         // movimenta a nave 
   
   if(tela==1){
+    if (xJogador<600 && xJogador>0){
     if(direcionais(xbde)){
-      xJogador=xJogador-5;
+      xJogador=xJogador-2;
     }
   if(direcionais(xbdd)){
-      xJogador=xJogador+5;
-    
+      xJogador=xJogador+2;
+  }
   }
 }
 
