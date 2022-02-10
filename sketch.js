@@ -356,6 +356,7 @@ if (tela == 4){
   game_over();
 } 
 }
+
 //função que detecta um clique do mouse, se a função detecta um clique e a função que detecta se o cursor está dentro do botão receber a informação de que está dentro do botão ao mesmo tempo, a variável tela muda de valor de acordo com o botão que foi selecionado
 function mouseClicked() {
   if(tela==0){if (estaSobreBtn(yb1)){
@@ -375,9 +376,10 @@ function mouseClicked() {
     if ( estaSobreBtnVoltar() ){
       tela = 0; 
     }}
-  
-  
 }
+  
+
+
 
 
 
