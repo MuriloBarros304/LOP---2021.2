@@ -52,7 +52,7 @@ function preload() {
 function estaSobreBtn(yBtnMenu){
   return  mouseX > xMenu && mouseX < xMenu + larguraBtnMenu && mouseY > yBtnMenu && mouseY < yBtnMenu + alturaBtnMenu;
 }
-
+ //função para os botões direcionais para celular
 function direcionais(xbd){
   return  mouseY > ybd && mouseY < ybd + larguraBtnDirecional && mouseX > xbd && mouseX < xbd + alturaBtnDirecional;
 }
@@ -88,6 +88,7 @@ function obstaculo(xo,yo,valor){
   text(valor,xo,yo+5);
 }
 
+//função que reinicia os obstáculos quando eles já desceram
 function reiniciaObstaculo(indice){
   
       xo[i] = random(600);
@@ -95,6 +96,8 @@ function reiniciaObstaculo(indice){
       valor[i]= parseInt(random(50));
       
   }
+
+//função para gerar a próxima questão
 function próximaPergunta(){
     v1=parseInt(random(25));
     v2=parseInt(random(25));
@@ -111,19 +114,17 @@ function fase1(){
     image(imgMenu,0,0,600,400);
     
   
-    
-  
         // movimenta a nave 
-  
+   //function mouseIsPressed(){
   if(tela==1){
-    if (xJogador<600 && xJogador>0){
-    if(direcionais(xbde)){
-      xJogador=xJogador-2;
-    }
-  if(direcionais(xbdd)){
-      xJogador=xJogador+2;
+    if(direcionais(xbde) && mouseIsPressed === true){
+      
+      xJogador=xJogador-5;}
+    
+  if(direcionais(xbdd) && mouseIsPressed === true){
+      xJogador=xJogador+5;
   }
-  }
+  //}
 }
 
     if (keyIsDown(LEFT_ARROW)) {
@@ -138,6 +139,7 @@ function fase1(){
     if (keyIsDown(DOWN_ARROW)) {
       yJogador += 5;
     }
+    //progressão da dificuldade no jogo
     if(pontos>500){
       vo=1.5;
       quantidadeObst=7;
@@ -154,7 +156,20 @@ function fase1(){
       vo=3;
       quantidadeObst=25;
     }
-    
+     //limitando a movimentação da nave
+  if(xJogador>600){
+    xJogador=600;
+  }
+  if(xJogador<0){
+    xJogador=0;
+  }
+  if(yJogador>400){
+    yJogador=400;
+  }
+  if(yJogador<0){
+    yJogador=0;
+  }
+  
     fill(255);
     textSize(25);
     stroke(0);
@@ -380,7 +395,7 @@ function mouseClicked() {
       tela = 0; 
     }}
 }
-  
+
 
 
 
